@@ -32,31 +32,15 @@ jobs:
 
           chmod +x build.sh
 
-          docker rm -f ob || true
-
-          docker create --name ob openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }}
-
-          docker cp build.sh ob:/builder/build.sh
-
-          if [ -d files ]; then
-            docker cp files ob:/builder/files
-          else
-            echo "no files overlay, skip"
-          fi
-
-          docker start -a ob || {
-            echo "BUILD FAILED"
-            docker logs ob || true
-            exit 1
-          }
-
-          docker exec ob ls -lah /builder || true
-
-          if ! docker cp ob:/builder/bin ./bin; then
-            echo "NO OUTPUT GENERATED"
-            docker logs ob || true
-            exit 1
-          fi
+          docker run --name ob \
+            -v ${{ github.workspace }}/files:/builder/files \
+            -v ${{ github.workspace }}/build.sh:/builder/build.sh \
+            openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }} \
+            /builder/build.sh
+          
+          mkdir -p bin
+          
+          docker cp ob:/builder/bin ./bin
 
           docker rm ob
 
