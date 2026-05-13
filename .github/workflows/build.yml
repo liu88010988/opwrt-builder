@@ -42,15 +42,13 @@ jobs:
             echo "no files overlay, skip"
           fi
 
-          # 关键：运行 + 捕获失败
           if ! docker start -a ob; then
             echo "BUILD FAILED"
             docker logs ob
             exit 1
           fi
 
-          # 检查输出是否存在
-          if ! docker cp ob:/builder/bin/targets ./bin/targets; then
+          if ! docker cp ob:/builder/bin ./bin; then
             echo "NO OUTPUT GENERATED"
             docker logs ob
             exit 1
