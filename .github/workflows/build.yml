@@ -30,12 +30,18 @@ jobs:
         run: |
           chmod +x build.sh
 
-          docker run --rm \
-            -v ${{ github.workspace }}/files:/builder/files \
-            -v ${{ github.workspace }}/build.sh:/builder/build.sh \
-            -v ${{ github.workspace }}:/workspace \
-            openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }} \
-            /builder/build.sh
+          docker rm -f ob || true
+          docker create --name ob openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }}
+
+          docker cp build.sh ob:/builder/build.sh
+          docker cp files ob:/builder/files
+
+          docker start -a ob
+
+          mkdir -p bin
+          docker cp ob:/builder/bin ./bin
+
+          docker rm ob
 
       - name: Show Output
         run: |
