@@ -30,8 +30,6 @@ jobs:
         run: |
           chmod +x build.sh
 
-          mkdir -p bin
-
           docker run --rm \
             -v ${{ github.workspace }}/bin:/builder/bin \
             -v ${{ github.workspace }}/files:/builder/files \
@@ -47,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: openwrt-firmware
-          path: bin/**
+          path: bin/targets/**/*
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -55,4 +53,4 @@ jobs:
           tag_name: ${{ github.event.inputs.imagebuilder }}
           name: OpenWrt-${{ github.event.inputs.imagebuilder }}
           generate_release_notes: true
-          files: bin/**/*
+          files: bin/targets/**/*
