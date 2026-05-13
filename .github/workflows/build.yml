@@ -29,7 +29,6 @@ jobs:
       - name: Build Firmware
         run: |
           chmod +x build.sh
-          chmod +x setup.sh
 
           mkdir -p bin
 
