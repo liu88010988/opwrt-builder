@@ -28,6 +28,8 @@ jobs:
 
       - name: Build Firmware
         run: |
+          set -e
+
           chmod +x build.sh
 
           docker rm -f ob || true
@@ -42,15 +44,17 @@ jobs:
             echo "no files overlay, skip"
           fi
 
-          if ! docker start -a ob; then
+          docker start -a ob || {
             echo "BUILD FAILED"
-            docker logs ob
+            docker logs ob || true
             exit 1
-          fi
+          }
+
+          docker exec ob ls -lah /builder || true
 
           if ! docker cp ob:/builder/bin ./bin; then
             echo "NO OUTPUT GENERATED"
-            docker logs ob
+            docker logs ob || true
             exit 1
           fi
 
