@@ -19,3 +19,4 @@ PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-package-manager-zh-cn"
 
 make image PACKAGES="$PACKAGES" ROOTFS_PARTSIZE="1024"
+cp -r bin/targets /workspace/bin

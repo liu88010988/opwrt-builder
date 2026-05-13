@@ -31,9 +31,9 @@ jobs:
           chmod +x build.sh
 
           docker run --rm \
-            -v ${{ github.workspace }}/bin:/builder/bin \
             -v ${{ github.workspace }}/files:/builder/files \
             -v ${{ github.workspace }}/build.sh:/builder/build.sh \
+            -v ${{ github.workspace }}:/workspace \
             openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }} \
             /builder/build.sh
 
