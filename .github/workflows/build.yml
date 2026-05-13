@@ -34,12 +34,12 @@ jobs:
           docker create --name ob openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }}
 
           docker cp build.sh ob:/builder/build.sh
-          docker cp files ob:/builder/files
+          docker cp files ob:/builder/files || true
 
           docker start -a ob
 
           mkdir -p bin
-          docker cp ob:/builder/bin ./bin
+          docker cp ob:/builder/bin/targets ./bin/targets
 
           docker rm ob
 
