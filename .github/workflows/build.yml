@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       imagebuilder:
-        description: "OpenWrt ImageBuilder Tag (ex x86-64-25.12.3)"
+        description: "OpenWrt ImageBuilder Tag (e.g. x86-64-25.12.3)"
         required: true
 
 jobs:
