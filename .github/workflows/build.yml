@@ -38,9 +38,7 @@ jobs:
             openwrt/imagebuilder:${{ github.event.inputs.imagebuilder }} \
             /builder/build.sh
           
-          mkdir -p bin
-          
-          docker cp ob:/builder/bin ./bin
+          docker cp ob:/builder/bin .
 
           docker rm ob
 
