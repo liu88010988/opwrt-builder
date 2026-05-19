@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "OpenWrt version (e.g. v25.12.3)"
+        description: "OpenWrt version (optional e.g. v25.12.3)"
         required: false
 
   schedule:
